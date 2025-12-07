@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>404 - Redirecting</title>
+    <meta http-equiv="refresh" content="0;url=/" />
+    <script>
+      // Redirect all unknown routes to index for SPA routing on GitHub Pages
+      const redirectUrl = window.location.origin + "/";
+      window.location.replace(redirectUrl);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting…</p>
+  </body>
+</html>
