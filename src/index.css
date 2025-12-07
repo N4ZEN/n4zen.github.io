@@ -1,0 +1,642 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap");
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 190 90% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 175 80% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 190 90% 42%;
+
+    --radius: 1rem;
+
+    /* Custom colors - cyan/light blue theme */
+    --gradient-start: 190 90% 42%;
+    --gradient-end: 175 80% 40%;
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 0 0% 100% / 0.3;
+    --glow-primary: 190 90% 42% / 0.3;
+    --glow-accent: 175 80% 40% / 0.2;
+
+    --sidebar-background: 220 20% 95%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 91%;
+
+    --chip-bg: 190 90% 42% / 0.1;
+    --chip-border: 190 90% 42% / 0.3;
+    --chip-text: 190 90% 32%;
+
+    /* Timeline */
+    --timeline-line: 190 90% 42% / 0.3;
+    --timeline-dot: 190 90% 42%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 190 90% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 175 80% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 190 90% 55%;
+
+    --glass-bg: 222 47% 13% / 0.8;
+    --glass-border: 217 33% 25% / 0.5;
+    --glow-primary: 190 90% 55% / 0.2;
+    --glow-accent: 175 80% 50% / 0.15;
+
+    --sidebar-background: 222 47% 10%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 20%;
+
+    --chip-bg: 190 90% 55% / 0.15;
+    --chip-border: 190 90% 55% / 0.4;
+    --chip-text: 190 90% 70%;
+
+    --timeline-line: 190 90% 55% / 0.4;
+    --timeline-dot: 190 90% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: "Inter", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Outfit", sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl;
+    box-shadow:
+      0 4px 24px -4px hsl(var(--glow-primary)),
+      0 0 0 1px hsl(var(--glass-border));
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply -translate-y-1;
+    box-shadow:
+      0 8px 32px -4px hsl(var(--glow-primary)),
+      0 4px 16px -2px hsl(var(--glow-accent)),
+      0 0 0 1px hsl(var(--glass-border));
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 3px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium;
+    @apply bg-[hsl(var(--chip-bg))] border border-[hsl(var(--chip-border))];
+    @apply text-[hsl(var(--chip-text))] transition-all duration-200;
+  }
+
+  .chip:hover {
+    @apply scale-105;
+    box-shadow: 0 0 16px hsl(var(--glow-primary));
+  }
+
+  .section-title {
+    @apply text-xl font-semibold text-foreground flex items-center gap-3;
+  }
+
+  .section-title::before {
+    content: "";
+    @apply w-2 h-2 rounded-full bg-primary;
+  }
+
+  .timeline-item {
+    @apply relative pl-8 pb-8;
+  }
+
+  .timeline-item::before {
+    content: "";
+    @apply absolute left-0 top-2 w-3 h-3 rounded-full bg-primary;
+    box-shadow: 0 0 12px hsl(var(--glow-primary));
+  }
+
+  .timeline-item::after {
+    content: "";
+    @apply absolute left-[5px] top-5 w-0.5 h-full bg-[hsl(var(--timeline-line))];
+  }
+
+  .timeline-item:last-child::after {
+    @apply hidden;
+  }
+
+  .icon-glow {
+    @apply transition-all duration-300;
+  }
+
+  .icon-glow:hover {
+    filter: drop-shadow(0 0 8px hsl(var(--primary)));
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors duration-200;
+  }
+
+  .tool-icon {
+    @apply p-4 rounded-2xl glass-card flex flex-col items-center gap-2 transition-all duration-300;
+  }
+
+  .tool-icon:hover {
+    @apply -translate-y-1;
+    box-shadow: 0 8px 24px -4px hsl(var(--glow-primary));
+  }
+
+  .present-badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    color: white;
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
+}
+
+/* Print styles for PDF - Two-column layout like webpage */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Reset and base */
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Dark mode colors for print */
+  html.dark,
+  html.dark body {
+    background: hsl(222 47% 8%) !important;
+    color: hsl(210 40% 98%) !important;
+  }
+
+  html:not(.dark),
+  html:not(.dark) body {
+    background: hsl(220 20% 97%) !important;
+    color: hsl(222 47% 11%) !important;
+  }
+
+  /* Main container - force two column side-by-side layout */
+  .min-h-screen {
+    min-height: auto !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Turn off flex on the main layout container when printing */
+  .min-h-screen.flex {
+    display: block !important;
+  }
+
+  /* Root layout: sidebar + main as two columns on PDF */
+  .min-h-screen.flex-col,
+  .min-h-screen.flex-col.lg\\:flex-row {
+    display: grid !important;
+    grid-template-columns: 190px 1fr !important; /* sidebar | main */
+    column-gap: 10px !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+
+  /* Sidebar - left column in print */
+  aside {
+    width: 190px !important;
+    min-width: 190px !important;
+    max-width: 190px !important;
+    padding: 12px !important;
+    font-size: 7px !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: 100% !important;
+    /* key: behave like left column */
+    float: left !important;
+  }
+
+  /* Main content - right column in print */
+  main {
+    padding: 12px !important;
+    font-size: 7px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+
+    /* key: sit to the right of the sidebar */
+    margin-left: 190px !important;
+    width: auto !important;
+    max-width: none !important;
+
+    /* flex properties are not needed in print */
+    flex: none !important;
+  }
+
+  aside .sticky {
+    position: relative !important;
+    top: 0 !important;
+  }
+
+  html.dark aside {
+    background: hsl(222 47% 10%) !important;
+    border-right: 1px solid hsl(217 33% 20%) !important;
+  }
+
+  html:not(.dark) aside {
+    background: hsl(220 20% 95%) !important;
+    border-right: 1px solid hsl(220 13% 91%) !important;
+  }
+
+  aside h1 {
+    font-size: 13px !important;
+    margin-bottom: 2px !important;
+    line-height: 1.2 !important;
+  }
+
+  aside h3 {
+    font-size: 7px !important;
+    margin-bottom: 3px !important;
+  }
+
+  aside p {
+    font-size: 6.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  aside .space-y-8 > * {
+    margin-top: 8px !important;
+  }
+
+  aside .space-y-4 > * {
+    margin-top: 4px !important;
+  }
+
+  aside .space-y-3 > * {
+    margin-top: 3px !important;
+  }
+
+  aside .space-y-2 > * {
+    margin-top: 2px !important;
+  }
+
+  aside .text-xl {
+    font-size: 12px !important;
+  }
+
+  aside .text-2xl {
+    font-size: 10px !important;
+  }
+
+  aside blockquote {
+    padding-left: 8px !important;
+    font-size: 6px !important;
+  }
+
+  /* Main content - fills remaining space, no overlap */
+
+  main .space-y-12 > * {
+    margin-top: 10px !important;
+  }
+
+  /* Expandable sections - force expanded for print */
+  .max-h-0 {
+    max-height: none !important;
+    overflow: visible !important;
+    margin-top: 8px !important;
+  }
+
+  .max-h-\\[600px\\],
+  .max-h-\\[800px\\] {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Glass cards with proper theming */
+  html.dark .glass-card {
+    background: hsl(222 47% 11%) !important;
+    border: 1px solid hsl(217 33% 20%) !important;
+    box-shadow: none !important;
+    padding: 8px !important;
+    border-radius: 6px !important;
+  }
+
+  html:not(.dark) .glass-card {
+    background: white !important;
+    border: 1px solid hsl(220 13% 91%) !important;
+    box-shadow: none !important;
+    padding: 8px !important;
+    border-radius: 6px !important;
+  }
+
+  .section-title {
+    font-size: 9px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .section-title::before {
+    width: 4px !important;
+    height: 4px !important;
+  }
+
+  /* Chips compact */
+  html.dark .chip {
+    font-size: 6px !important;
+    padding: 1px 4px !important;
+    margin: 1px !important;
+    background: hsl(190 90% 55% / 0.15) !important;
+    border-color: hsl(190 90% 55% / 0.4) !important;
+    color: hsl(190 90% 70%) !important;
+  }
+
+  html:not(.dark) .chip {
+    font-size: 6px !important;
+    padding: 1px 4px !important;
+    margin: 1px !important;
+    background: hsl(190 90% 42% / 0.1) !important;
+    border-color: hsl(190 90% 42% / 0.3) !important;
+    color: hsl(190 90% 32%) !important;
+  }
+
+  /* Timeline very compact */
+  .timeline-item {
+    padding-left: 12px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .timeline-item::before {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  .timeline-item::after {
+    left: 2px !important;
+  }
+
+  /* Hide print-excluded elements */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Allow page breaks but avoid breaking sections */
+  section {
+    break-inside: avoid;
+    margin-bottom: 8px !important;
+  }
+
+  /* Compact headings */
+  h2 {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+  }
+
+  h3 {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+  }
+
+  h4 {
+    font-size: 7px !important;
+  }
+
+  p,
+  li,
+  span {
+    font-size: 6.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Grid layouts compact */
+  .grid-cols-2,
+  .lg\\:grid-cols-2 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  /* Tool icons smaller */
+  .tool-icon {
+    padding: 4px !important;
+    border-radius: 4px !important;
+  }
+
+  .tool-icon svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Gradient text - solid for print */
+  html.dark .gradient-text {
+    background: none !important;
+    -webkit-text-fill-color: hsl(190 90% 55%) !important;
+    color: hsl(190 90% 55%) !important;
+  }
+
+  html:not(.dark) .gradient-text {
+    background: none !important;
+    -webkit-text-fill-color: hsl(190 90% 42%) !important;
+    color: hsl(190 90% 42%) !important;
+  }
+
+  /* Present badge */
+  .present-badge {
+    font-size: 5px !important;
+    padding: 1px 4px !important;
+  }
+
+  /* Accordion items - ensure expanded for print */
+  [data-state="closed"] {
+    display: block !important;
+  }
+
+  [data-state="closed"] [data-radix-accordion-content] {
+    display: block !important;
+    height: auto !important;
+  }
+
+  /* Footer compact */
+  footer {
+    padding: 6px !important;
+    margin-top: 8px !important;
+  }
+
+  /* Gap adjustments */
+  .gap-4 {
+    gap: 6px !important;
+  }
+
+  .gap-6 {
+    gap: 8px !important;
+  }
+
+  .gap-3 {
+    gap: 4px !important;
+  }
+
+  /* Padding adjustments */
+  .p-6,
+  .p-8 {
+    padding: 8px !important;
+  }
+
+  .px-4,
+  .px-6 {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .py-4,
+  .py-6 {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+}
